@@ -1,0 +1,48 @@
+import modeloTest.*
+import regiones.*
+import ciudades.*
+import centrales.*
+
+describe " Se plantea a centralAtomicaBurns con 10 verillas de uranio,
+			centralExBosque con 20 toneladas como capacidad y la necesidad energetica
+			de springfield es 20 Millones de kwh ( unidad adoptada ) "{
+				
+	test " A) La centralAtomicaBurns produce 1 Mkwh en springfield"{
+		modelo.ejecutar()
+		assert.equals(1,centralAtomicaBurns.produccionDeEnergia(springfield))
+	}
+	
+	test " B) La centralExBosque produce 18.5 Mkwh en sprinfield"{
+		modelo.ejecutar()
+		assert.equals(18.5,centralExBosque.produccionDeEnergia(springfield))
+	}
+	
+	test " C) La centralElSuspiro produce 2 Mkwh en sprinfield"{
+		modelo.ejecutar()
+		assert.equals(2,centralElSuspiro.produccionDeEnergia(springfield))
+	}
+	
+	test " D) Las centrales contaminantes de springfield es una coleccion con solo
+				la centralExBosque"{
+		modelo.ejecutar()
+		assert.equals(#{centralExBosque},springfield.centralesContaminantes())			
+	}
+	
+	test " E) Springfield cubrio su necesidad energetica "{
+		modelo.ejecutar()
+		assert.that(springfield.cubrioSusNecesidades())
+	}
+	
+	test " F) Springfield con una necesidad energetica de 30 Mkwh esta al horno"{
+		modelo.ejecutar()
+		assert.that(springfield.estaEnElHorno())
+	}
+	
+	test " G) Las centrales mas productoras de la region donde estan springfield
+				y albuquerque son la centralExBosque y la centralHidroelectrica"{
+		
+		modelo.ejecutar()
+		assert.equals([centralHidroelectrica,centralExBosque],region.centralesMasPotentesDeCadaCiudad())
+		
+	}
+} 
